@@ -1,113 +1,97 @@
 # 💕 LoveLinkUp
-**Match Makers** - A Progressive Web App (PWA) for Intelligent Matchmaking
+**Match Makers** — A Progressive Web App (PWA) for intelligent matchmaking
 
 ---
 
 ## 📱 Overview
 
-LoveLinkUp is an instant-installable Progressive Web App that combines intelligent matchmaking with a user-friendly monetization model. The app prioritizes user experience by removing initial paywalls, allowing unrestricted access before introducing optional premium features.
+LoveLinkUp is an installable Progressive Web App that combines intelligent matchmaking with a user-friendly monetization model. The app is designed to remove initial paywalls while providing optional, transparent upgrades and a self-managed advertising portal.
 
 ### Key Features
 
 ✨ **Core Matchmaking**
-- AI-powered profile matching algorithm
+- AI-assisted profile matching
 - Real-time match suggestions
-- Intuitive user profiles with media support
+- User profiles with media support
 
-🚀 **Progressive Web App (PWA)**
-- Install directly from browser
-- Works offline with service workers
+🚀 **Progressive Web App**
+- Install directly from a supported browser
+- Offline support with service workers
 - Fast, app-like experience
 - Cross-platform compatibility
 
-💰 **Fair Monetization Model**
-- Non-intrusive micro-transactions ($1 increments)
-- Premium features unlock gradually, not from start
-- User-controlled ad portal with flexible pricing
-- Transparent, fair pricing structure
+💰 **Fair Monetization**
+- Optional micro-transactions
+- Gradual premium feature unlocks
+- User-controlled advertising portal
+- Transparent pricing
 
 📢 **Self-Managed Ad Portal**
-- Up to 5 different ad formats per user
-- Minimum input required for ad creation
-- AI-assisted ad suggestions and auto-generation
-- File and video upload support
-- Paystack payment integration
-- Smart, fair pricing algorithm (never overpriced)
+- Text, image, video, carousel, and interactive ad formats
+- AI-assisted copy suggestions
+- File and video uploads
+- Paystack integration
+- Fair-price suggestions
 
-🤖 **AI Assistance**
-- Intelligent profile recommendations
-- Auto ad creation with minimal user input
-- Fair price suggestion based on market data
-- Enhanced matching accuracy
-
-📊 **Google Ads Integration**
-- Optional display ads for non-premium users
-- Revenue sharing model
-- Unobtrusive placement
+🔐 **Firebase Authentication**
+- Email/password authentication
+- Google sign-in
+- Password reset emails
+- Persistent browser sessions
+- Firebase ID-token verification for protected backend routes
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework**: React / Vue.js / Svelte
-- **PWA**: Service Workers, Web App Manifest
-- **UI**: Responsive CSS, Mobile-first design
-- **State Management**: Redux / Context API / Pinia
-- **Storage**: IndexedDB for offline data
+- React with Vite
+- Firebase Authentication
+- Service Workers and Web App Manifest
+- Responsive, mobile-first CSS/Tailwind CSS
+- IndexedDB for offline data where appropriate
 
 ### Backend
-- **Runtime**: Node.js / Python / Go
-- **API**: REST / GraphQL
-- **Database**: PostgreSQL / MongoDB
-- **Authentication**: JWT + OAuth2
-- **Payment**: Paystack API integration
+- Node.js and Express
+- Firebase Admin SDK for server-side token verification
+- REST API
+- PostgreSQL or MongoDB for application data
+- Paystack API integration
 
 ### AI/ML
-- **Matching Algorithm**: Collaborative filtering / Content-based filtering
-- **Ad Generation**: LLM integration (OpenAI / Anthropic)
-- **Price Optimization**: Predictive pricing model
+- Content-based and collaborative matching
+- LLM-assisted ad generation
+- Predictive price suggestions
 
 ### Deployment
-- **Hosting**: Vercel / Netlify / AWS / Firebase
-- **CDN**: CloudFlare
-- **Container**: Docker
-- **CI/CD**: GitHub Actions
+- Vercel, Netlify, AWS, or Firebase Hosting
+- Cloudflare CDN
+- Docker and GitHub Actions
 
 ---
 
 ## 📦 Project Structure
 
-```
+```text
 lovelinkup/
 ├── public/
-│   ├── manifest.json          # PWA manifest
-│   └── service-worker.js      # Service worker
+│   ├── manifest.json
+│   └── service-worker.js
 ├── src/
 │   ├── components/
-│   │   ├── Profile/
-│   │   ├── Matching/
-│   │   ├── AdPortal/
-│   │   └── Monetization/
 │   ├── pages/
-│   │   ├── Home.jsx
-│   │   ├── Match.jsx
-│   │   ├── AdManager.jsx
-│   │   └── Settings.jsx
 │   ├── services/
-│   │   ├── api.js             # API client
-│   │   ├── auth.js            # Authentication
-│   │   ├── matching.js        # Matching engine
-│   │   ├── payment.js         # Paystack integration
-│   │   └── ai.js              # AI services
+│   │   ├── api.js
+│   │   ├── auth.js
+│   │   ├── matching.js
+│   │   ├── payment.js
+│   │   └── ai.js
 │   ├── utils/
 │   ├── styles/
-│   └── App.jsx
+│   ├── App.jsx
+│   └── main.jsx
 ├── backend/
-│   ├── api/
-│   ├── models/
-│   ├── services/
-│   └── config/
+│   └── server.js
 ├── tests/
 ├── docs/
 └── package.json
@@ -118,167 +102,388 @@ lovelinkup/
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 16+
-- npm or yarn
-- PostgreSQL/MongoDB
-- Paystack Account
-- Google Ads Account (optional)
+
+- Node.js 18 or later recommended
+- npm
+- A Firebase project
+- A Paystack account for payments
+- PostgreSQL or MongoDB if persistence is enabled
+- Google Ads account (optional)
 
 ### Installation
 
 ```bash
-# Clone repository
 git clone https://github.com/domislinkint/lovelinkup.git
 cd lovelinkup
-
-# Install dependencies
 npm install
+```
 
-# Setup environment variables
-cp .env.example .env.local
+#### Create the environment file on Windows
 
-# Start development server
+The original `cp` command is for macOS/Linux. In Command Prompt, use:
+
+```bat
+copy .env.example .env.local
+```
+
+In PowerShell, use:
+
+```powershell
+Copy-Item .env.example .env.local
+```
+
+If the copy command reports that the file cannot be found, confirm that `.env.example` exists by running `dir`. If it does not exist in your checkout, create `.env.local` manually from the variables below. Never commit `.env.local` or real credentials.
+
+### Run the frontend
+
+```bash
 npm run dev
 ```
 
-### Environment Variables
+The Vite development server normally runs at `http://localhost:5173`.
+
+### Run the backend separately
+
+```bash
+npm run backend
+```
+
+The API normally runs at `http://localhost:3000`. Run `npm run` to see the scripts available in your local checkout.
+
+---
+
+## 🔐 Firebase Authentication
+
+LoveLinkUp uses Firebase Authentication for identity management. Firebase handles credential storage, provider flows, email delivery, token refresh, and session persistence. The LoveLinkUp backend must still verify every Firebase ID token before accepting authenticated requests.
+
+### 1. Create and configure a Firebase project
+
+1. Open the [Firebase Console](https://console.firebase.google.com/).
+2. Create a project or select an existing project.
+3. Add a Web app from **Project settings → Your apps**.
+4. Copy the web configuration values into `.env.local`.
+5. Open **Build → Authentication → Sign-in method**.
+6. Enable the providers required by the application:
+   - Email/password
+   - Google, including a support email
+   - Any additional provider only after its redirect and privacy requirements are configured
+7. Add local and production domains under **Authentication → Settings → Authorized domains**. Add `localhost` for local development.
+8. Configure password-reset and email-verification templates under **Authentication → Templates**.
+
+Firebase web configuration values are intended to identify the Firebase project; they are not a replacement for Firebase Security Rules or backend authorization. Do not place service-account private keys in frontend environment variables.
+
+### 2. Firebase frontend environment variables
+
+Add these values to `.env.local`:
 
 ```env
-# API
+VITE_FIREBASE_API_KEY=your_firebase_web_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_firebase_app_id
+```
+
+Vite exposes variables prefixed with `VITE_` to browser code. Therefore, only Firebase web configuration belongs here. Keep server secrets such as `FIREBASE_PRIVATE_KEY` and `PAYSTACK_SECRET_KEY` server-side.
+
+### 3. Install the Firebase client SDK
+
+```bash
+npm install firebase
+```
+
+Create `src/services/firebase.js`:
+
+```js
+import { initializeApp } from 'firebase/app'
+import {
+  browserLocalPersistence,
+  getAuth,
+  setPersistence,
+} from 'firebase/auth'
+
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+}
+
+const app = initializeApp(firebaseConfig)
+export const auth = getAuth(app)
+
+// Keep the user signed in across browser restarts.
+export const authReady = setPersistence(auth, browserLocalPersistence)
+```
+
+### 4. Authentication service
+
+Create or adapt `src/services/auth.js`:
+
+```js
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from 'firebase/auth'
+import { auth, authReady } from './firebase'
+
+const googleProvider = new GoogleAuthProvider()
+
+export async function registerWithEmail({ name, email, password }) {
+  await authReady
+  const credential = await createUserWithEmailAndPassword(auth, email, password)
+  if (name) await updateProfile(credential.user, { displayName: name })
+  await sendEmailVerification(credential.user)
+  return credential.user
+}
+
+export async function loginWithEmail(email, password) {
+  await authReady
+  const credential = await signInWithEmailAndPassword(auth, email, password)
+  return credential.user
+}
+
+export async function loginWithGoogle() {
+  await authReady
+  const credential = await signInWithPopup(auth, googleProvider)
+  return credential.user
+}
+
+export function resetPassword(email) {
+  return sendPasswordResetEmail(auth, email)
+}
+
+export function logout() {
+  return signOut(auth)
+}
+```
+
+### 5. Observe authentication state
+
+Use `onAuthStateChanged` near the application root or in an authentication context. Always unsubscribe when the component unmounts:
+
+```jsx
+import { useEffect, useState } from 'react'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from './services/firebase'
+
+export function useCurrentUser() {
+  const [user, setUser] = useState(undefined)
+
+  useEffect(() => onAuthStateChanged(auth, setUser), [])
+  return user
+}
+```
+
+`undefined` can represent the initial loading state, `null` represents signed out, and a Firebase user object represents signed in. Protect routes only after the initial loading state has resolved.
+
+### 6. Send the Firebase ID token to the backend
+
+Firebase automatically refreshes tokens on the client. Before an authenticated API request, obtain the current ID token and send it as a bearer token:
+
+```js
+import { auth } from './firebase'
+
+export async function authorizedFetch(url, options = {}) {
+  const user = auth.currentUser
+  if (!user) throw new Error('You must be signed in')
+
+  const idToken = await user.getIdToken()
+  const headers = new Headers(options.headers)
+  headers.set('Authorization', `Bearer ${idToken}`)
+  headers.set('Content-Type', 'application/json')
+
+  return fetch(url, { ...options, headers })
+}
+```
+
+Never trust an email address, user ID, or role supplied directly in a request body. Derive the authenticated user identity from the verified token on the server.
+
+### 7. Verify tokens in the Express backend
+
+Install the Admin SDK:
+
+```bash
+npm install firebase-admin
+```
+
+Create a server-only Firebase Admin initialization module. Use Application Default Credentials in hosted environments where possible. For local development, use a service-account JSON file outside the repository and point `GOOGLE_APPLICATION_CREDENTIALS` to it, or load the equivalent credentials from a secret manager.
+
+```js
+import { applicationDefault, getApps, initializeApp } from 'firebase-admin/app'
+import { getAuth } from 'firebase-admin/auth'
+
+if (!getApps().length) initializeApp({ credential: applicationDefault() })
+export const adminAuth = getAuth()
+```
+
+Protect Express routes with middleware:
+
+```js
+import { adminAuth } from './firebase-admin.js'
+
+export async function requireAuth(req, res, next) {
+  const authorization = req.headers.authorization || ''
+  const match = authorization.match(/^Bearer (.+)$/)
+
+  if (!match) return res.status(401).json({ error: 'Missing bearer token' })
+
+  try {
+    req.user = await adminAuth.verifyIdToken(match[1])
+    return next()
+  } catch {
+    return res.status(401).json({ error: 'Invalid or expired token' })
+  }
+}
+```
+
+Example protected route:
+
+```js
+app.get('/api/profile', requireAuth, async (req, res) => {
+  res.json({ uid: req.user.uid, email: req.user.email })
+})
+```
+
+For custom claims such as `admin`, set them only from trusted server code and check them after token verification. Do not expose Admin SDK credentials in the browser.
+
+### 8. Firestore and Storage security
+
+If Firestore or Firebase Storage is used, enable authentication-aware Security Rules before production. Rules are an additional authorization layer; they do not replace backend token verification.
+
+Example Firestore rules for users reading and updating only their own profile:
+
+```text
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, create, update: if request.auth != null
+        && request.auth.uid == userId;
+      allow delete: if false;
+    }
+  }
+}
+```
+
+Review rules with the Firebase Emulator Suite before deploying. Restrict file types and sizes in Storage Rules, validate uploads on the backend, and never allow public writes by default.
+
+### 9. Account lifecycle and production checklist
+
+- Require email verification before sensitive actions where appropriate.
+- Provide password reset and sign-out controls.
+- Handle deleted, disabled, and unverified accounts gracefully.
+- Use HTTPS in production and configure the exact authorized domains.
+- Rate-limit registration, login, password reset, and profile endpoints.
+- Do not log passwords, ID tokens, refresh tokens, or service-account credentials.
+- Keep Firebase web configuration separate from server secrets.
+- Test popup and redirect sign-in on every supported browser and mobile PWA mode.
+- Enable App Check where appropriate and monitor Authentication usage and audit logs.
+- Back up and review Firestore/Storage rules before each release.
+
+### Firebase troubleshooting
+
+- **`auth/unauthorized-domain`**: add the current host to Firebase Authentication authorized domains.
+- **Popup blocked or closed**: use a user-initiated button and provide a redirect-based fallback for mobile browsers.
+- **`auth/operation-not-allowed`**: enable the provider in Firebase Console.
+- **Backend returns 401**: verify the request has `Authorization: Bearer <ID_TOKEN>` and that the backend uses the matching Firebase project credentials.
+- **Environment values are undefined**: restart Vite after changing `.env.local`, and confirm frontend variables use the `VITE_` prefix.
+- **Password email is not received**: check Firebase email templates, the recipient spam folder, and the authorized sender configuration.
+
+---
+
+## 🔑 Environment Variables
+
+```env
+# Frontend API
 VITE_API_URL=http://localhost:3000
-VITE_API_KEY=your_api_key
 
-# Authentication
-VITE_AUTH0_DOMAIN=your_auth0_domain
-VITE_AUTH0_CLIENT_ID=your_client_id
+# Firebase Web App configuration
+VITE_FIREBASE_API_KEY=your_firebase_web_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_FIREBASE_STORAGE_BUCKET=your-project.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_firebase_app_id
 
-# Payment - Paystack
-VITE_PAYSTACK_PUBLIC_KEY=your_paystack_public_key
+# Backend only — never expose these as VITE_ variables
+GOOGLE_APPLICATION_CREDENTIALS=C:\path\outside\repository\firebase-service-account.json
 PAYSTACK_SECRET_KEY=your_paystack_secret_key
-
-# AI Services
 OPENAI_API_KEY=your_openai_key
 AI_MODEL=gpt-4
-
-# Google Ads
-GOOGLE_ADS_CLIENT_ID=your_client_id
-GOOGLE_ADS_CLIENT_SECRET=your_secret
-
-# Database
 DATABASE_URL=postgresql://user:password@localhost:5432/lovelinkup
+NODE_ENV=development
+PORT=3000
+FRONTEND_URL=http://localhost:5173
+JWT_SECRET=use-a-long-random-value-if-the-application-uses-jwt
 ```
+
+`.env.local` is intentionally ignored by Git. Use `.env.example` as a template and replace placeholders locally.
 
 ---
 
 ## 💡 Core Features Explained
 
-### 1. **AI-Powered Matchmaking**
-Matches are calculated using:
-- Profile compatibility scores
-- Interest alignment
-- Demographic compatibility
-- Behavioral patterns
+### AI-powered matchmaking
+
+Matches can combine profile compatibility, interest overlap, demographic preferences, and behavioral signals. Any production scoring system should be tested for bias, explainability, abuse, and user consent.
 
 ```javascript
-// Example: Match calculation
 const compatibilityScore = (profile1, profile2) => {
-  const interests = calculateInterestOverlap(profile1, profile2);
-  const demographics = calculateDemographicFit(profile1, profile2);
-  const behavioral = calculateBehavioralMatch(profile1, profile2);
-  
-  return (interests * 0.4) + (demographics * 0.35) + (behavioral * 0.25);
-};
+  const interests = calculateInterestOverlap(profile1, profile2)
+  const demographics = calculateDemographicFit(profile1, profile2)
+  const behavioral = calculateBehavioralMatch(profile1, profile2)
+
+  return (interests * 0.4) + (demographics * 0.35) + (behavioral * 0.25)
+}
 ```
 
-### 2. **Self-Managed Ad Portal**
+### Self-managed advertising
 
-Users can create ads with up to 5 different formats:
-- **Text Ads**: Title + description
-- **Image Ads**: Photo + headline
-- **Video Ads**: Short video + CTAs
-- **Carousel Ads**: Multiple images/offers
-- **Interactive Ads**: Polls, forms, CTAs
+Users can create text, image, video, carousel, and interactive ads. Validate uploads, sanitize text, enforce content moderation, and keep payment and advertising authorization on the server.
 
-**AI-Assisted Features:**
-- Auto-generate ad copy based on business description
-- Suggest optimal pricing based on market demand
-- Recommend best ad format
-- Schedule optimal posting times
+### Fair pricing
 
-### 3. **Fair Pricing Algorithm**
-
-```python
-def calculate_fair_price(ad_format, duration, market_demand, competition):
-    """
-    Calculate fair market price for ads
-    Never overprice; ensure value-for-money
-    """
-    base_price = {
-        'text': 1.0,
-        'image': 2.0,
-        'video': 3.5,
-        'carousel': 2.5,
-        'interactive': 3.0
-    }[ad_format]
-    
-    # Adjust for duration
-    price = base_price * (duration / 7)  # per week
-    
-    # Market adjustment (±20%)
-    market_factor = (competition + 1) / market_demand
-    price *= max(0.8, min(1.2, market_factor))
-    
-    return round(price, 2)
-```
-
-### 4. **Monetization Strategy**
-
-**Free Tier (Always Available):**
-- Basic profile creation
-- View limited matches (5/day)
-- Receive messages
-- Browse ads
-
-**Optional Micro-Transactions ($1+):**
-- See all matches (+$1)
-- Premium filters (+$2)
-- Boost profile visibility (+$3 for 24h)
-- Remove ads temporarily (+$2)
-- Featured ad placement (+varies)
-
-**Ad Revenue:**
-- Google Ads display revenue sharing
-- User ad platform revenue (70% to user, 30% to platform)
-- Premium membership ($5/month optional)
+Pricing suggestions should be transparent, bounded, and reviewable. Never charge a user based on a hidden or discriminatory attribute.
 
 ---
 
 ## 🔐 Security & Privacy
 
-- **End-to-End Encryption**: Messages encrypted
-- **Data Protection**: GDPR/CCPA compliant
-- **Payment Security**: PCI-DSS compliance with Paystack
-- **Authentication**: Secure JWT tokens + refresh rotation
-- **Rate Limiting**: API throttling to prevent abuse
+- Firebase Authentication manages sign-in credentials and identity tokens.
+- Backend routes verify Firebase ID tokens before accessing private data.
+- Firestore and Storage rules must deny unauthorized access by default.
+- Messages and personal data require appropriate encryption and retention controls.
+- Follow applicable GDPR, CCPA, and local privacy requirements.
+- Use Paystack's hosted/payment APIs without handling raw card details.
+- Rate-limit authentication, messaging, uploads, and payment endpoints.
+- Provide account deletion and data export processes where required.
+
+The security claims above describe required controls and should not be interpreted as a claim that every control is already implemented in the starter scaffold.
 
 ---
 
-## 📊 Database Schema (Overview)
+## 🗃️ Database Schema (Overview)
 
-### Users Table
 ```sql
 CREATE TABLE users (
   id UUID PRIMARY KEY,
+  firebase_uid VARCHAR UNIQUE NOT NULL,
   email VARCHAR UNIQUE,
-  password_hash VARCHAR,
   profile_data JSONB,
   created_at TIMESTAMP,
   updated_at TIMESTAMP
 );
-```
 
-### Matches Table
-```sql
 CREATE TABLE matches (
   id UUID PRIMARY KEY,
   user_id_1 UUID,
@@ -286,10 +491,7 @@ CREATE TABLE matches (
   compatibility_score FLOAT,
   created_at TIMESTAMP
 );
-```
 
-### Ads Table
-```sql
 CREATE TABLE user_ads (
   id UUID PRIMARY KEY,
   user_id UUID,
@@ -301,87 +503,60 @@ CREATE TABLE user_ads (
 );
 ```
 
-### Transactions Table
-```sql
-CREATE TABLE transactions (
-  id UUID PRIMARY KEY,
-  user_id UUID,
-  amount DECIMAL,
-  type VARCHAR,
-  paystack_ref VARCHAR,
-  status VARCHAR,
-  created_at TIMESTAMP
-);
-```
+Use the Firebase `uid` as the stable identity mapping when synchronizing Firebase users with an application database. Do not use an email address as the primary identity key.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature/amazing-feature`.
+3. Install dependencies and run the application locally.
+4. Write tests for new behavior.
+5. Commit with a conventional commit message.
+6. Push the branch and open a Pull Request.
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Code Standards
-- Follow ESLint configuration
-- Write tests for new features
-- Update documentation
-- Use conventional commits
+Do not commit `.env.local`, Firebase service-account files, API keys, payment secrets, or user data.
 
 ---
 
 ## 📈 Roadmap
 
-- [x] Core PWA structure
-- [ ] User authentication & profiles
+- [x] Core PWA scaffold
+- [ ] Firebase Authentication UI and account flows
+- [ ] User profiles and verification
 - [ ] Matching algorithm
 - [ ] Ad portal MVP
 - [ ] Payment integration
 - [ ] AI ad generation
 - [ ] Analytics dashboard
-- [ ] Mobile app (React Native)
+- [ ] Mobile app
 - [ ] Video chat integration
-- [ ] Advanced filters & preferences
-
----
-
-## 🎯 Performance Targets
-
-- **Core Web Vitals**: LCP < 2.5s, FID < 100ms, CLS < 0.1
-- **Lighthouse Score**: 90+
-- **Offline Support**: Full functionality with cached data
-- **Installation Size**: < 5MB initial load
-- **API Response Time**: < 200ms (p95)
+- [ ] Advanced filters and preferences
 
 ---
 
 ## 📞 Support & Contact
 
-- **Email**: support@lovelinkup.app
-- **Support Contact**: domislinkint@gmail.com
-- **Discord**: [Community Server](https://discord.gg/lovelinkup)
-- **Issues**: [GitHub Issues](https://github.com/domislinkint/lovelinkup/issues)
-- **Documentation**: [Full Docs](https://docs.lovelinkup.app)
+- **Support email**: [support@domislink.com](mailto:support@domislink.com)
+- **GitHub Issues**: [github.com/domislinkint/lovelinkup/issues](https://github.com/domislinkint/lovelinkup/issues)
+- **Documentation**: [docs.lovelinkup.app](https://docs.lovelinkup.app)
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
+- Firebase for authentication infrastructure
 - Paystack for payment infrastructure
 - OpenAI for AI capabilities
 - The open-source community
 
 ---
 
-**LoveLinkUp** - Making meaningful connections, one match at a time. 💕
-
+**LoveLinkUp** — Making meaningful connections, one match at a time. 💕
