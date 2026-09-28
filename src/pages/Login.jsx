@@ -2,8 +2,9 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Heart, Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react'
 import { loginWithEmail, loginWithGoogle } from '../services/auth'
+import { GuestRoute } from '../components/ProtectedRoute'
 
-function Login() {
+function LoginPage() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -47,7 +48,7 @@ function Login() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Heart className="w-8 h-8 text-primary-500 fill-current" />
-            <h1 className="text-3xl font-bold text-gray-900\">LoveLinkUp</h1>
+            <h1 className="text-3xl font-bold text-gray-900">LoveLinkUp</h1>
           </div>
           <p className="text-gray-600">Welcome back</p>
         </div>
@@ -69,7 +70,8 @@ function Login() {
               <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
               <input
                 type="email"
-                value={email}\n                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 placeholder="your@email.com"
                 required
@@ -155,4 +157,10 @@ function Login() {
   )
 }
 
-export default Login
+export default function Login() {
+  return (
+    <GuestRoute>
+      <LoginPage />
+    </GuestRoute>
+  )
+}
